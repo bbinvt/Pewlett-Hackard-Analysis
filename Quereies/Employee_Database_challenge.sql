@@ -48,3 +48,32 @@ LEFT OUTER JOIN titles AS t
 ON (e.emp_no = t.emp_no)
 WHERE (e.birth_date BETWEEN '1965-01-01' AND '1965-12-31')
 ORDER BY e.emp_no;
+
+-- Additional Queries to help interpret analysis
+
+-- Total Active employees:
+SELECT  e.emp_no,
+        e.first_name,
+        e.last_name,
+        t.title,
+        t.from_date,
+        t.to_date
+FROM employees as e
+INNER JOIN titles as t
+ON (e.emp_no = t.emp_no)
+WHERE (t.to_date = '9999-01-01')
+ORDER BY e.emp_no;
+
+-- Mentorship Eligibility by title
+SELECT COUNT(title), title
+INTO mentorship_titles
+FROM mentorship_elegibility
+GROUP BY title
+ORDER BY COUNT(title) DESC;
+
+-- Active Titles
+SELECT COUNT(title), title
+INTO active_titles
+FROM active_employees
+GROUP BY title
+ORDER BY COUNT(title) DESC;
